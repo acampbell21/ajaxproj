@@ -21,8 +21,8 @@ $(document).ready( function() {
 
   function toggle() {
     showForm = !showForm;
-    $('#game-form').remove();
-    $('#games-list').toggle();
+    $('#character-form').remove();
+    $('#characters-list').toggle();
 
     if (showForm) {
       let data = {};
@@ -55,7 +55,7 @@ $(document).ready( function() {
     });
   });
 
-  $(document).on('submit', '#character-form form', function (e) {
+  $(document).on('submit', '#character-form', function (e) {
     e.preventDefault();
     var params = $(this).serializeArray();
     var url = '/games/:game_id/characters';
@@ -82,21 +82,5 @@ $(document).ready( function() {
     toggle();
   });
 
-  $(document).on('click', .'character-item', function() {
-    currentCharacter.id = this.dataset.id
-    currentCharacter.name = this.dataset.name
-    $.ajax({
-      url: '/games/' + currentCharacter.id + '/characters',
-      type: 'GET'
-    }).done( function(characters) {
-      $('#character').text('Characters in ' + currentCharacter.name);
-      var list = $('#characters');
-      list.empty();
-      characters.forEach( function(char) {
-        var li = '<li data-character-id="' + char.id + '">' + char.name + ' - ' + char.power + '</li>'
-        list.append(li);
-      })
-    })
-  })
 
 })
